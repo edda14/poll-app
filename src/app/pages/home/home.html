@@ -1,1 +1,10 @@
-<p>home works!</p>
+<h1>Poll App</h1>
+
+@for (survey of surveys; track survey.id) {
+  <article>
+    <h2>{{ survey.title }}</h2>
+    <p>{{ survey.description }}</p>
+    <p>{{ survey.question }}</p>
+    <small>{{ survey.deadline }}</small>
+  </article>
+}
