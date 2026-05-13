@@ -1,10 +1,10 @@
-<h1>Poll App</h1>
+<main class="home">
+    <app-navbar />
+  <app-hero />
 
-@for (survey of surveys; track survey.id) {
-  <article>
-    <h2>{{ survey.title }}</h2>
-    <p>{{ survey.description }}</p>
-    <p>{{ survey.question }}</p>
-    <small>{{ survey.deadline }}</small>
-  </article>
-}
+  <app-survey-section />
+
+  <app-tab-switcher />
+
+  <app-survey-section />
+</main>

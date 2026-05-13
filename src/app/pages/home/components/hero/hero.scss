@@ -1,0 +1,132 @@
+section {
+    width: 1220px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+
+    .left {
+        width: 712px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        >h2 {
+            color: rgba(255, 183, 112, 1);
+            font-size: 100px;
+            font-weight: 400;
+            line-height: 89px;
+            font-family: "Nerko";
+        }
+
+        >p {
+            color: rgba(255, 255, 255, 1);
+            font-size: 24px;
+            font-style: "Semibold";
+            font-family: "Mulish";
+        }
+
+        >button {
+            background-color: rgba(255, 207, 161, 1);
+            border: none;
+            color: black;
+            padding: 12px 16px;
+            height: max-content;
+            font-family: "Nokora";
+            font-size: 18px;
+            font-weight: 700;
+            color: rgba(34, 18, 39, 1);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border-radius: 10px;
+            transition: background-color ease 0.3s;
+            position: relative;
+            width: 135px;
+            transition: width 0.3s ease;
+
+            img {
+                position: absolute;
+                right: 5px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            &:hover {
+                width: 160px;
+                cursor: pointer;
+                background-color: rgba(255, 183, 112, 1);
+                img {
+                    opacity: 1;
+                }
+            }
+
+            .dnone {
+                opacity: 0;
+                transform: translateX(-10px);
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+
+        }
+
+    }
+
+    .right {
+        position: relative;
+
+        &:hover {
+
+            .star {
+                transform: translateX(-20px) translateY(20px);
+            }
+
+            .bubble {
+                transform: translateX(-15px) translateY(-10px) scale(1.4);
+            }
+
+            .check {
+                transform: translateX(60px) translateY(20px) scale(1.1);
+            }
+
+            .question {
+                transform: translateX(-20px) translateY(20px) rotate(-40deg);
+            }
+        }
+
+        .clipboard {
+            position: relative;
+            z-index: 2;
+        }
+
+        .star {
+            position: absolute;
+            bottom: 20px;
+            left: 40px;
+            transition: transform 0.2s ease;
+        }
+
+        .bubble {
+            position: absolute;
+            z-index: 3;
+            left: 110px;
+            top: 130px;
+            transition: transform 0.2s ease;
+            width: 110px;
+        }
+
+        .check {
+            position: absolute;
+            z-index: 1;
+            top: 370px;
+            right: 80px;
+            transition: transform 0.2s ease;
+        }
+
+        .question {
+            position: absolute;
+            right: 40px;
+            z-index: 2;
+            rotate: calc(20deg);
+            transition: transform 0.2s ease;
+        }
+    }
+}

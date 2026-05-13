@@ -1,9 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SurveyService } from '../../services/survey';
+import { Navbar } from './components/navbar/navbar';
+import { Hero } from './components/hero/hero';
+import { SurveySection } from './components/survey-section/survey-section';
+import { TabSwitcher } from './components/tab-switcher/tab-switcher';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [Navbar, Hero, SurveySection, TabSwitcher],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
