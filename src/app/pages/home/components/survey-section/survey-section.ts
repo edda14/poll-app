@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { SurveyCard } from './../survey-card/survey-card'
+
 
 @Component({
   selector: 'app-survey-section',
-  imports: [],
+  imports: [ SurveyCard],
   templateUrl: './survey-section.html',
   styleUrl: './survey-section.scss',
 })
