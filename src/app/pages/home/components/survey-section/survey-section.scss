@@ -20,11 +20,13 @@ section {
             font-size: 32px;
             font-weight: 400;
             letter-spacing: 5%;
+            padding-left: 18px;
         }
         >div {
             width: auto;
             display: flex;
             flex-direction: row;
+            justify-content: center;
             gap: 32px;
 
 

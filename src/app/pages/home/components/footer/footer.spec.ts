@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabSwitcher } from './tab-switcher';
+import { Footer } from './footer';
 
-describe('TabSwitcher', () => {
-  let component: TabSwitcher;
-  let fixture: ComponentFixture<TabSwitcher>;
+describe('Footer', () => {
+  let component: Footer;
+  let fixture: ComponentFixture<Footer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TabSwitcher],
+      imports: [Footer],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TabSwitcher);
+    fixture = TestBed.createComponent(Footer);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

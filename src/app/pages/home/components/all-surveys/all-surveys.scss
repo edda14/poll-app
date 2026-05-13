@@ -1,0 +1,86 @@
+section {
+    width: 1042px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    >nav {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .left {
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+
+            >button {
+                padding: 2px 10px;
+                border-radius: 20px;
+                background-color: rgba(254, 233, 212, 1);
+                font-family: "Nokora";
+                font-size: 16px;
+                font-weight: 400;
+                color: rgba(53, 39, 58, 1);
+                border: none;
+                transition: all ease 0.3s;
+
+                &:hover {
+                    background-color: rgba(255, 183, 112, 1);
+                    cursor: pointer;
+                }
+
+            }
+        }
+
+        .right {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: all ease 0.3s;
+
+            >img {
+                transition: all ease 0.3s;
+            }
+
+            >p {
+                font-family: "Mulish";
+                font-size: 18px;
+                font-weight: 700;
+                color: rgba(255, 255, 255, 1);
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(217, 217, 217, 0.12);
+
+                >img {
+                    filter: brightness(0) saturate(100%) invert(83%) sepia(32%) saturate(1106%) hue-rotate(325deg) brightness(101%) contrast(101%);
+                }
+            }
+        }
+    }
+
+    #allSurveys {
+        display: grid;
+        grid-template-columns: repeat(2, 505px);
+        gap: 16px;
+        max-height: 505px;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba(255, 183, 112, 1);
+            border-radius: 999px;
+        }
+    }
+}

@@ -1,0 +1,55 @@
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 12px 20px;
+    height: 103px;
+    background-color: rgba(217, 217, 217, 0.08);
+    border-radius: 5px 50px 5px 5px;
+    transition: all ease 0.3s;
+    &:hover {
+        background-color: rgba(217, 217, 217, 0.16);
+        cursor: pointer;
+    }
+
+    .firstSection {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        >p {
+            font-family: "Mulish";
+            font-size: 16px;
+            color: rgba(255, 207, 161, 1);
+            font-weight: 500;
+            letter-spacing: 7%;
+            line-height: 100%;
+        }
+
+        >h3 {
+            font-family: "Mulish";
+            font-size: 24px;
+            color: rgba(255, 255, 255, 1);
+            font-weight: 700;
+        }
+    }
+
+    .secondSection {
+        display: flex;
+        justify-content: end;
+        >div {
+            width:fit-content;
+            padding: 3px 6px;
+            background-color: rgba(255, 207, 161, 1);
+            border-radius: 0px 14px 0px 0px;
+            >p {
+                font-family: "Mulish";
+                font-size: 12px;
+                font-weight: 500;
+                color: rgba(34, 18, 39, 1);
+            }
+        }
+
+    }
+
+}
