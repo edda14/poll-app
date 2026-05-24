@@ -1,10 +1,30 @@
-<section>
+<section [routerLink]="['/survey', survey.id]">
     <div class="firstSection">
-        <p>Team activities</p>
-        <h3>Let's Plan the Next Team Event Together</h3>
+
+        <p>{{ survey?.category }}</p>
+
+        <h3>{{ survey?.title }}</h3>
 
     </div>
+
     <div class="secondSection">
-        <div><p>Ends in <span>2</span> Day's</p></div>
+
+        <div>
+
+            <p>
+
+                @if (survey?.deadline) {
+                    Ends on
+                    <span>
+                        {{ survey.deadline | date:'dd.MM.yyyy' }}
+                    </span>
+                } @else {
+                    No deadline
+                }
+
+            </p>
+
+        </div>
+
     </div>
 </section>

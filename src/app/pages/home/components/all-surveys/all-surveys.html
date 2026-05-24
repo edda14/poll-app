@@ -1,8 +1,29 @@
-<section>
+<section id="all-surveys">
     <nav>
         <div class="left">
-            <button>Active survey</button>
-            <button>Past survey</button>
+            <button
+
+  type="button"
+
+  [class.active]="selectedTab === 'active'"
+
+  (click)="selectedTab = 'active'">
+
+  Active survey
+
+</button>
+
+<button
+
+  type="button"
+
+  [class.active]="selectedTab === 'past'"
+
+  (click)="selectedTab = 'past'">
+
+  Past survey
+
+</button>
         </div>
         <div class="right">
             <p>Sort by categories</p>
@@ -10,17 +31,16 @@
         </div>
     </nav>
     <div id="allSurveys">
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
-        <app-small-survey-card></app-small-survey-card>
+        @if (selectedTab === 'active') {
+        @for (survey of activeSurveys; track survey.id) {
+        <app-small-survey-card [survey]="survey" />
+        }
+        }
+
+        @if (selectedTab === 'past') {
+        @for (survey of pastSurveys; track survey.id) {
+        <app-small-survey-card [survey]="survey" />
+        }
+        }
     </div>
 </section>

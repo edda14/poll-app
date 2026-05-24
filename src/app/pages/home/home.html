@@ -1,7 +1,9 @@
 <main class="home">
   <app-navbar />
   <app-hero />
-  <app-survey-section />
-  <app-all-surveys/>
-  <app-footer/>
+  <app-survey-section [surveys]="endingSoonSurveys"></app-survey-section>
+  <app-all-surveys [selectedTab]="selectedTab" [activeSurveys]="activeSurveys" [pastSurveys]="pastSurveys">
+
+  </app-all-surveys>
+  <app-footer />
 </main>

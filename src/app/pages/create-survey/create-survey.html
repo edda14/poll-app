@@ -1,0 +1,138 @@
+<section class="create-survey">
+    <article>
+        <header>
+            <div class="status">
+                <p>Draft</p>
+            </div>
+            <div class="title">
+                <h3>Create new survey</h3>
+                <button class="btn-cls">Cancel <img src="./assets/icons/close.svg" alt="close"></button>
+            </div>
+        </header>
+        <div class="form">
+            <form action="">
+                <div class="top">
+                    <div class="left">
+                        <div class="row">
+                            <div class="input-group">
+                                <label>Survey name</label>
+                                <input class="title" type="text" [(ngModel)]="surveyTitle" name="surveyTitle">
+                            </div>
+                            <div class="delete">
+                                <img src="./assets/icons/trash.svg" alt="trash">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="row">
+                                <div class="input-group">
+                                    <label>Set end date (optional)</label>
+                                    <input class="date" type="text" [(ngModel)]="deadline"
+                                        name="deadline">
+                                </div>
+                                <div class="delete">
+                                    <img src="./assets/icons/trash.svg" alt="trash">
+                                </div>
+                            </div>
+                            <div class="category-dropdown">
+                                <button type="button" class="dropdown-trigger"
+                                    (click)="isCategoryOpen = !isCategoryOpen" [class.open]="isCategoryOpen">
+                                    Choose category
+                                    <img src="./assets/icons/arrow_drop_down.svg" alt="">
+                                </button>
+                                @if (selectedCategory) {
+
+                                <p class="selected-category">
+
+                                    {{ selectedCategory }}
+
+                                </p>
+
+                                }
+
+                                @if (isCategoryOpen) {
+                                <ul class="dropdown-menu">
+                                    @for (category of categories; track category) {
+                                    <li (click)="selectedCategory = category; isCategoryOpen = false">
+                                        {{ category }}
+                                    </li>
+                                    }
+                                </ul>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="top">
+                            <div class="input-group">
+                                <label>Describing text (optional)</label>
+                                <textarea [(ngModel)]="description" name="description"></textarea>
+                            </div>
+                            <div class="delete">
+                                <img src="./assets/icons/trash.svg" alt="trash">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="questions">
+                    <div class="questions-box-left">
+                        <article class="question">
+                            <div class="question-header">
+                                <h4>1. Question</h4>
+                                <div class="delete">
+                                    <img src="./assets/icons/trash.svg" alt="trash">
+                                </div>
+                            </div>
+                            <input class="question-input" type="text" [(ngModel)]="question" name="question">
+                            <div class="answers-header">
+                                <h5>Answers</h5>
+                                <label>
+                                    <input type="checkbox">
+                                    Allow multiple answers.
+                                </label>
+                            </div>
+                            <div class="answers">
+                                <div class="answer">
+                                    <span>A.</span>
+                                    <input type="text" [(ngModel)]="answerA" name="answerA">
+                                    <div class="delete">
+                                        <img src="./assets/icons/trash.svg" alt="trash">
+                                    </div>
+                                </div>
+                                <div class="answer">
+                                    <span>B.</span>
+                                    <input type="text" [(ngModel)]="answerB" name="answerB">
+                                    <div class="delete">
+                                        <img src="./assets/icons/trash.svg" alt="trash">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-box">
+                                <button type="button" class="add-answer">
+                                    Add answer
+                                    <img src="./assets/icons/circle-white.svg" alt="circle">
+                                </button>
+                                <p>You can add up to 6 answer fields.</p>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="questions-box-right">
+                        <button>
+                            Add next question
+                            <img src="./assets/icons/circle-white.svg" alt="circle">
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="footer">
+            <button class="btn-prm" (click)="publishSurvey()">
+                Publish
+                <img src="./assets/icons/check-btn.svg" alt="check">
+            </button>
+
+        </div>
+    </article>
+
+</section>

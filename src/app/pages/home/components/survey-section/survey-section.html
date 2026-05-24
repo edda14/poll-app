@@ -3,9 +3,15 @@
     <div>
         <h3>Ending soon surveys</h3>
         <div>
-            <app-survey-card></app-survey-card>
-            <app-survey-card></app-survey-card>
-            <app-survey-card></app-survey-card>
+            @for (survey of surveys; track survey.id) {
+            <app-survey-card [survey]="survey">
+            </app-survey-card>
+            }
+            @if (surveys.length === 0) {
+
+            <p>No surveys ending soon.</p>
+
+            }
         </div>
     </div>
 </section>
