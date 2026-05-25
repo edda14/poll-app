@@ -1,46 +1,61 @@
 <section id="all-surveys">
     <nav>
         <div class="left">
-            <button
+            <button type="button" [class.active]="selectedTab === 'active'" (click)="selectedTab = 'active'">
 
-  type="button"
+                Active survey
 
-  [class.active]="selectedTab === 'active'"
+            </button>
 
-  (click)="selectedTab = 'active'">
+            <button type="button" [class.active]="selectedTab === 'past'" (click)="selectedTab = 'past'">
 
-  Active survey
+                Past survey
 
-</button>
-
-<button
-
-  type="button"
-
-  [class.active]="selectedTab === 'past'"
-
-  (click)="selectedTab = 'past'">
-
-  Past survey
-
-</button>
+            </button>
         </div>
         <div class="right">
-            <p>Sort by categories</p>
-            <img src="./assets/icons/arrow_drop_down.svg" alt="arrow drop down">
+            <div class="category-dropdown">
+                <button type="button" class="dropdown-trigger" (click)="isCategoryOpen = !isCategoryOpen"
+                    [class.open]="isCategoryOpen">
+                    Sort by categories
+                    <img src="./assets/icons/arrow_drop_down.svg" alt="">
+                </button>
+                @if (selectedCategory) {
+
+                <p class="selected-category">
+
+                    {{ selectedCategory }}
+
+                </p>
+
+                }
+
+                @if (isCategoryOpen) {
+                <ul class="dropdown-menu">
+                    @for (category of categories; track category) {
+                    <li (click)="selectedCategory = category; isCategoryOpen = false">
+                        {{ category }}
+                    </li>
+                    }
+                </ul>
+                }
+            </div>
         </div>
     </nav>
     <div id="allSurveys">
-        @if (selectedTab === 'active') {
-        @for (survey of activeSurveys; track survey.id) {
-        <app-small-survey-card [survey]="survey" />
-        }
-        }
+        @for (survey of getFilteredSurveys(); track survey.id) {
 
-        @if (selectedTab === 'past') {
-        @for (survey of pastSurveys; track survey.id) {
         <app-small-survey-card [survey]="survey" />
+
         }
+        @if (getFilteredSurveys().length === 0) {
+
+        <div class="empty-category">
+
+            <p>No surveys in this category.</p>
+
+        </div>
+
         }
     </div>
 </section>

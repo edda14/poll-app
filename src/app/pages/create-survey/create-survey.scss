@@ -90,6 +90,12 @@
             display: flex;
             justify-content: end;
             width: 100%;
+            gap: 24px;
+            align-items: center;
+            color: rgba(238, 146, 54, 1);
+            font-family: "Mulish";
+            font-weight: 700;
+            font-size: 18px;
 
             .btn-prm {
                 background-color: rgba(255, 207, 161, 1);
@@ -170,6 +176,14 @@
                 }
             }
 
+            input:focus {
+                background-color: rgba(254, 233, 212, 1);
+            }
+
+            textarea:focus {
+                background-color: rgba(254, 233, 212, 1) !important;
+            }
+
             .delete {
                 margin-top: 30px;
                 margin-left: 8px;
@@ -241,9 +255,15 @@
                 }
             }
 
+            .questions-grid {
+
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 48px;
+            }
+
             .questions {
                 display: flex;
-                flex-direction: row;
                 gap: 91px;
 
                 .questions-box-right {
@@ -272,11 +292,14 @@
             }
 
             .question {
+                display: grid (2);
+                width: 470px;
+
                 .button-box {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    width: 100%;
+                    width: 90%;
                     justify-content: space-between;
 
                     >p {
@@ -400,7 +423,7 @@
     color: rgba(255, 183, 112, 1);
     font-size: 14px;
     font-weight: 400;
-    margin-left: 10px;
+    margin-left: 30px;
     margin-top: 4px;
     letter-spacing: 2%;
 }
@@ -408,6 +431,8 @@
 .category-dropdown {
     position: relative;
     width: 178px;
+    margin-left: 30px;
+    margin-top: 10px;
 
     .dropdown-trigger {
         width: 100%;
@@ -425,17 +450,24 @@
         transition: all ease 0.3s;
         cursor: pointer;
         border-radius: 8px;
+
         >img {
             rotate: 180deg;
         }
+
         &:hover {
             background-color: rgba(142, 112, 153, 0.4);
+
+            >img {
+                filter: brightness(0) saturate(100%) invert(79%) sepia(52%) saturate(768%) hue-rotate(329deg) brightness(102%) contrast(101%)
+            }
         }
     }
 
     .dropdown-trigger.open {
         border-radius: 8px;
         background-color: rgba(142, 112, 153, 0.4);
+
         >img {
             rotate: 0deg;
             filter: brightness(0) saturate(100%) invert(79%) sepia(52%) saturate(768%) hue-rotate(329deg) brightness(102%) contrast(101%);
@@ -469,4 +501,120 @@
             }
         }
     }
+}
+
+.multiple-label {
+
+    input {
+        display: none;
+    }
+
+    .checkbox {
+        border-radius: 3px;
+        border: 2px solid #fff;
+        width: 15px;
+        height: 15px;
+        transition: all ease 0.2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .d-none {
+            display: none;
+        }
+
+        >img {
+            width: 13px;
+        }
+
+        &:hover {
+            cursor: pointer;
+            background-color: rgba(255, 207, 161, 0.6);
+            border-color: rgba(250, 245, 254, 1);
+        }
+    }
+
+    input:checked+.checkbox {
+        background-color: rgba(255, 183, 112, 1);
+        border: none;
+    }
+
+    input:checked+.checkbox .check-icon {
+
+        display: block;
+
+    }
+}
+
+.check-icon {
+    display: none;
+}
+
+
+
+.delete.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+    cursor: default;
+}
+
+.success {
+    position: fixed;
+    z-index: 100;
+    right: 400px;
+    bottom: 130px;
+    border-radius: 5px 50px 5px 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: start;
+    padding: 18px 8px;
+    width: 357px;
+    height: 70px;
+
+    background-color: rgba(254, 233, 212, 1);
+
+    color: rgba(34, 18, 39, 1);
+
+    animation: slideIn 0.4s ease;
+
+    >p {
+        font-family: "Nerko";
+        font-size: 24px;
+        font-weight: 400;
+        letter-spacing: 2%;
+        color: rgba(53, 39, 58, 1);
+        width: 190px;
+    }
+
+    >img {
+        cursor: pointer;
+        margin-right: 8px;
+        margin-top: 8px;
+
+        &:hover {
+            filter: brightness(0) saturate(100%) invert(79%) sepia(52%) saturate(768%) hue-rotate(329deg) brightness(102%) contrast(101%);
+        }
+    }
+
+}
+
+@keyframes slideIn {
+
+    from {
+
+        transform: translateX(100%);
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        transform: translateX(0);
+
+        opacity: 1;
+
+    }
+
 }

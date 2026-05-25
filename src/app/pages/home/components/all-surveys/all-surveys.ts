@@ -11,4 +11,30 @@ export class AllSurveys {
   @Input() selectedTab: 'active' | 'past' = 'active';
   @Input() activeSurveys: any[] = [];
   @Input() pastSurveys: any[] = [];
+  categories = [
+    'Team Activities',
+    'Health & Wellness',
+    'Gaming & Entertainment',
+    'Education & Learning',
+    'Lifestyle & Preferences',
+    'Technology & Innovation'
+  ];
+  isCategoryOpen = false;
+  selectedCategory = '';
+
+  getFilteredSurveys() {
+
+    const surveys =
+      this.selectedTab === 'active'
+        ? this.activeSurveys
+        : this.pastSurveys;
+
+    if (!this.selectedCategory) {
+      return surveys;
+    }
+
+    return surveys.filter(
+      survey => survey.category === this.selectedCategory
+    );
+  }
 }

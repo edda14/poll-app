@@ -54,11 +54,13 @@ export class SurveyService {
 
     const surveyId = surveyData.id;
 
-    const options = answers.map((answer) => ({
-      survey_id: surveyId,
-      text: answer,
-      votes: 0,
-    }));
+    const options = answers
+      .filter((answer) => answer.trim() !== '')
+      .map((answer) => ({
+        survey_id: surveyId,
+        text: answer,
+        votes: 0,
+      }));
 
     const { error: optionsError } =
       await this.supabaseService.supabase

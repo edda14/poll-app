@@ -7,6 +7,7 @@ import { Footer } from './components/footer/footer';
 import { AllSurveys } from './components/all-surveys/all-surveys'
 import { AfterViewInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-home',
   imports: [Navbar, Hero, SurveySection, Footer, AllSurveys],
