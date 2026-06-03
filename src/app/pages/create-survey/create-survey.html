@@ -1,6 +1,8 @@
 <section class="create-survey">
     <article>
         <header>
+            <button class="btn-cls-media" routerLink="/"><img src="./assets/icons/close.svg" alt="close"></button>
+
             <div class="status">
                 <p>Draft</p>
             </div>
@@ -28,8 +30,8 @@
                                 </div>
                             </div>
                             <div class="category-dropdown">
-                                <button type="button" class="dropdown-trigger"
-                                    (click)="toggleCategoryDropdown()" [class.open]="isCategoryOpen">
+                                <button type="button" class="dropdown-trigger" (click)="toggleCategoryDropdown()"
+                                    [class.open]="isCategoryOpen">
                                     Choose category
                                     <img src="./assets/icons/arrow_drop_down.svg" alt="">
                                 </button>
@@ -146,12 +148,12 @@
             }
 
             @if (successMessage) {
-            <div class="hint success">
+            <div class="success">
                 <img (click)="closeSuccessHint()" src="./assets/icons/close-dark.svg" alt="Close icon">
                 <p>{{ successMessage }}</p>
             </div>
             }
-            <button class="btn-prm" [disabled]="isPublishing" (click)="publishSurvey()" >
+            <button class="btn-prm" [disabled]="isPublishing" (click)="publishSurvey()">
                 Publish
                 <img src="./assets/icons/check-btn.svg" alt="check">
             </button>

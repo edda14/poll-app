@@ -12,6 +12,7 @@
     gap: 40px;
 
     >article {
+        position: relative;
         width: 1116px;
         padding: 40px 54px;
         background-color: rgba(53, 39, 58, 1);
@@ -87,6 +88,7 @@
         }
 
         .footer {
+            position: relative;
             display: flex;
             justify-content: end;
             width: 100%;
@@ -559,10 +561,10 @@
 }
 
 .success {
-    position: fixed;
+    position: absolute;
     z-index: 100;
-    right: 400px;
-    bottom: 130px;
+    right: 12px;
+    bottom: 100px;
     border-radius: 5px 50px 5px 5px;
     display: flex;
     flex-direction: row-reverse;
@@ -571,11 +573,8 @@
     padding: 18px 8px;
     width: 357px;
     height: 70px;
-
     background-color: rgba(254, 233, 212, 1);
-
     color: rgba(34, 18, 39, 1);
-
     animation: slideIn 0.4s ease;
 
     >p {
@@ -617,4 +616,181 @@
 
     }
 
+}
+
+.btn-cls-media {
+    display: none;
+    position: absolute;
+    right: 42px;
+    width: fit-content;
+    padding: 4px 6px;
+    border: none;
+    flex-direction: row;
+    align-items: end;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 10px;
+    color: white;
+    font-family: "Nokora";
+    font-size: 16px;
+    font-weight: 700;
+    background-color: rgba(255, 183, 112, 0.3);
+    transition: all ease 0.15s;
+    height: fit-content;
+}
+
+
+
+@media (max-width: 1250px) {
+    .create-survey {
+        >article {
+            width: 700px;
+
+            .form {
+                .top {
+                    flex-direction: column;
+                }
+
+                .questions-grid {
+                    grid-template-columns: repeat(1, 1fr);
+                    gap: 48px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 850px) {
+    .success {
+        width: 220px;
+    }
+    .btn-cls-media {
+        display: flex;
+    }
+
+    .create-survey {
+        >article {
+            width: 500px;
+            padding: 24px 12px;
+
+            >header {
+
+                .title {
+                    >button {
+                        display: none;
+                    }
+                }
+            }
+
+            .form {
+                .top {
+                    flex-direction: column;
+
+                    .left {
+                        .row {
+                            flex-direction: column;
+                        }
+                    }
+                }
+
+                .questions-grid {
+                    grid-template-columns: repeat(1, 1fr);
+                    gap: 48px;
+                }
+            }
+        }
+    }
+
+    .selected-category {
+        margin-left: 10px;
+    }
+
+    .category-dropdown {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 550px) {
+     .success {
+        width: 270px;
+        bottom: 60px;
+    }
+    .btn-cls-media {
+        right: 52px;
+    }
+
+    .create-survey {
+        >article {
+            padding: 12px 6px;
+            width: 300px;
+
+            .form {
+                padding: 5px;
+
+                >form {
+                    gap: 24px;
+                }
+
+                input,
+                textarea {
+                    font-size: 14px;
+                }
+
+                .top {
+                    gap: 24px;
+
+                    .left {
+                        .input-group {
+                            .title {
+                                width: 250px;
+                            }
+                        }
+
+                        .row {
+                            flex-direction: column;
+                        }
+                    }
+
+                    .right {
+                        .input-group {
+                            >textarea {
+                                width: 250px;
+                            }
+                        }
+                    }
+                }
+
+                .question {
+                    width: 280px;
+
+                    .button-box {
+                        flex-direction: column;
+                        gap: 8px;
+                        align-items: start;
+
+                        >p {
+                            margin-top: 0px;
+                            margin-left: 10px;
+                        }
+                    }
+
+                    .answers-header {
+                        width: 280px;
+                    }
+
+                    .question-header {
+                        width: 280px;
+                    }
+
+                    .question-input {
+                        width: 250px;
+                    }
+                }
+            }
+        }
+    }
+
+    .textarea {
+        width: 250px;
+    }
 }
