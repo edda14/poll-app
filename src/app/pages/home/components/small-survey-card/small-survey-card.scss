@@ -7,9 +7,14 @@ section {
     background-color: rgba(217, 217, 217, 0.08);
     border-radius: 5px 50px 5px 5px;
     transition: all ease 0.3s;
-    &:hover {
+
+    &:not(.past-survey):hover {
         background-color: rgba(217, 217, 217, 0.16);
         cursor: pointer;
+    }
+
+    .past-survey { 
+        cursor: default;
     }
 
     .firstSection {
@@ -37,11 +42,13 @@ section {
     .secondSection {
         display: flex;
         justify-content: end;
+
         >div {
-            width:fit-content;
+            width: fit-content;
             padding: 3px 6px;
             background-color: rgba(255, 207, 161, 1);
             border-radius: 0px 14px 0px 0px;
+
             >p {
                 font-family: "Mulish";
                 font-size: 12px;

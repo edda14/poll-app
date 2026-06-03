@@ -23,15 +23,12 @@ export class SurveyService {
     description: string,
     deadline: string,
     category: string,
-    question: string,
-    answers: string[]
+    questions: any[]
   ) {
-
     const formattedDeadline = deadline
-
       ? this.convertGermanDateToIso(deadline)
-
       : null;
+
     const { data: surveyData, error: surveyError } =
       await this.supabaseService.supabase
         .from('surveys')
@@ -41,35 +38,60 @@ export class SurveyService {
             description,
             deadline: formattedDeadline,
             category,
-            question,
           },
         ])
-        .select()
-        .single();
+        .select('id');
 
     if (surveyError) {
       console.error(surveyError);
       return;
     }
 
-    const surveyId = surveyData.id;
+    const surveyId = surveyData?.[0]?.id;
 
-    const options = answers
-      .filter((answer) => answer.trim() !== '')
-      .map((answer) => ({
-        survey_id: surveyId,
-        text: answer,
-        votes: 0,
-      }));
-
-    const { error: optionsError } =
-      await this.supabaseService.supabase
-        .from('survey_options')
-        .insert(options);
-
-    if (optionsError) {
-      console.error(optionsError);
+    if (!surveyId) {
+      console.error('No survey id returned');
       return;
+    }
+
+    for (const question of questions) {
+      const { data: questionData, error: questionError } =
+        await this.supabaseService.supabase
+          .from('survey_questions')
+          .insert([
+            {
+              survey_id: surveyId,
+              question: question.question,
+              multiple: question.multiple,
+            },
+          ])
+          .select('id');
+
+      if (questionError) {
+        console.error(questionError);
+        return;
+      }
+
+      const questionId = questionData?.[0]?.id;
+
+      const options = question.answers
+        .filter((answer: string) => answer.trim() !== '')
+        .map((answer: string) => ({
+          survey_id: surveyId,
+          question_id: questionId,
+          text: answer,
+          votes: 0,
+        }));
+
+      const { error: optionsError } =
+        await this.supabaseService.supabase
+          .from('survey_options')
+          .insert(options);
+
+      if (optionsError) {
+        console.error(optionsError);
+        return;
+      }
     }
 
     console.log('Survey created successfully');
@@ -91,7 +113,19 @@ export class SurveyService {
 
       .from('surveys')
 
-      .select('*')
+      .select(`
+
+      *,
+
+      survey_questions (
+
+        *,
+
+        survey_options (*)
+
+      )
+
+    `)
 
       .eq('id', id)
 
@@ -108,6 +142,32 @@ export class SurveyService {
     return data;
 
   }
+
+ async vote(optionId: string, currentVotes: number) {
+
+  const { error } = await this.supabaseService.supabase
+
+    .from('survey_options')
+
+    .update({
+
+      votes: currentVotes + 1,
+
+    })
+
+    .eq('id', optionId);
+
+  if (error) {
+
+    console.error('Vote error:', error);
+
+    return false;
+
+  }
+
+  return true;
+
+}
 
 
 }

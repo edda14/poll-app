@@ -1,4 +1,19 @@
 section {
-    width: 1220px;
+    width: 1200px;
     height: 46px;
+}
+
+@media (max-width: 1250px) {
+    section {
+        width: auto;
+        position: absolute;
+        left: 24px;
+    }
+}
+@media (max-width: 530px) {
+    section {
+        width: auto;
+        position: absolute;
+        left: 10px;
+    }
 }

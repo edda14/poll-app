@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
+
 @Component({
   selector: 'app-small-survey-card',
   imports: [DatePipe, RouterLink],
@@ -10,4 +11,5 @@ import { RouterLink } from '@angular/router';
 })
 export class SmallSurveyCard {
   @Input() survey: any;
+  @Input() isPastSurvey = false;
 }

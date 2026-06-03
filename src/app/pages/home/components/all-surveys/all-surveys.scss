@@ -1,5 +1,5 @@
 section {
-    width: 1042px;
+    max-width: 1042px;
     height: auto;
     min-height: 500px;
     display: flex;
@@ -24,7 +24,7 @@ section {
                 font-family: "Nokora";
                 font-size: 16px;
                 font-weight: 400;
-                height:max-content;
+                height: max-content;
                 color: rgba(53, 39, 58, 1);
                 border: none;
                 transition: all ease 0.3s;
@@ -35,6 +35,7 @@ section {
                 }
 
             }
+
             >button.active {
                 background-color: rgba(255, 183, 112, 1);
                 cursor: default;
@@ -87,6 +88,7 @@ section {
     width: 190px;
     margin-left: 30px;
     margin-top: 10px;
+
     .selected-category {
         font-family: "Mulish";
         margin-left: 10px;
@@ -173,4 +175,40 @@ section {
     display: flex;
     justify-content: start;
     align-items: center;
+}
+
+@media (max-width: 1250px) {
+    section {
+        gap: 24px;
+        >nav {
+            flex-direction: column !important;
+            align-items: start;
+            gap: 24px;
+        }
+        .right {
+            padding: 0px !important;
+        }
+
+       .category-dropdown {
+        margin-left: 0px;
+        margin-top: 0px;
+       }
+
+    }
+     #allSurveys {
+        display: grid;
+        grid-template-columns:none !important;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-height: fit-content !important;
+        overflow-y:visible;
+
+     }
+}
+
+@media (max-width: 550px) {
+    section {
+        padding: 0 10px;
+    }
 }

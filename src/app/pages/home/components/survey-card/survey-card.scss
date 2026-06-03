@@ -50,3 +50,14 @@ section {
         }
     }
 }
+
+@media (max-width: 750px) {
+    section{
+        width: 200px;
+        height: 200px;
+        padding: 24px 16px;
+        .firstSection {
+            width: 200px;
+        }
+    }
+}

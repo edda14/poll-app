@@ -1,35 +1,25 @@
 <section id="all-surveys">
     <nav>
         <div class="left">
-            <button type="button" [class.active]="selectedTab === 'active'" (click)="selectedTab = 'active'">
-
+            <button type="button" [class.active]="selectedTab === 'active'" (click)="selectTab('active')">
                 Active survey
-
             </button>
-
-            <button type="button" [class.active]="selectedTab === 'past'" (click)="selectedTab = 'past'">
-
+            <button type="button" [class.active]="selectedTab === 'past'" (click)="selectTab('past')">
                 Past survey
-
             </button>
         </div>
         <div class="right">
             <div class="category-dropdown">
-                <button type="button" class="dropdown-trigger" (click)="isCategoryOpen = !isCategoryOpen"
+                <button type="button" class="dropdown-trigger" (click)="toggleCategoryDropdown()"
                     [class.open]="isCategoryOpen">
                     Sort by categories
                     <img src="./assets/icons/arrow_drop_down.svg" alt="">
                 </button>
                 @if (selectedCategory) {
-
                 <p class="selected-category">
-
                     {{ selectedCategory }}
-
                 </p>
-
                 }
-
                 @if (isCategoryOpen) {
                 <ul class="dropdown-menu">
                     @for (category of categories; track category) {
@@ -44,18 +34,12 @@
     </nav>
     <div id="allSurveys">
         @for (survey of getFilteredSurveys(); track survey.id) {
-
-        <app-small-survey-card [survey]="survey" />
-
+        <app-small-survey-card [survey]="survey" [isPastSurvey]="selectedTab === 'past'"/>
         }
         @if (getFilteredSurveys().length === 0) {
-
         <div class="empty-category">
-
-            <p>No surveys in this category.</p>
-
+            <p>No surveys.</p>
         </div>
-
         }
     </div>
 </section>

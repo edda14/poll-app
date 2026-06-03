@@ -6,210 +6,156 @@
             <img class="dnone" src="./assets/icons/add_circle.svg" alt="circle">
         </button>
     </nav>
-    <div>
+    <div class="detail-content">
         <section class="content">
             <div class="survey">
-                <div class="status">
-                    <p>Published</p>
+                <div class="top">
+                    <div class="status">
+                        <p>Published</p>
+                    </div>
+                    <div class="survey-content">
+                        <nav>
+                            <p> @if (survey?.deadline) {
+                                Ends on {{ survey.deadline | date:'dd.MM.yyyy' }}
+                                } @else {
+                                No deadline
+                                }</p>
+                            <p>Category: {{ survey?.category }}</p>
+                        </nav>
+                        <h2>{{ survey?.title }}</h2>
+                        <p>{{ survey?.description }}</p>
+                        <div class="questions">
+                            @for (question of survey?.survey_questions; track question.id; let questionIndex = $index) {
+
+                            <article class="question">
+
+                                <header class="question-nav">
+
+                                    <div>
+                                        <h3>{{ questionIndex + 1 }}.</h3> &nbsp;
+
+                                        <h3>
+                                            {{ question.question }}
+                                        </h3>
+                                    </div>
+
+                                    @if (question.multiple) {
+                                    <p>More than one answers are possible</p>
+                                    }
+
+                                </header>
+
+                                <div class="answers">
+
+                                    @for (option of question.survey_options; track option.id; let optionIndex = $index)
+                                    {
+
+                                    <div class="answer" (click)="selectAnswer(question, option.id)"
+                                        [class.selected]="isAnswerSelected(question.id, option.id)">
+
+                                        <div class="check"> <img class="check-icon" src="./assets/icons/check-btn.svg"
+                                                alt=""> </div>
+
+                                        <span>
+                                            <h3>{{ ['A', 'B', 'C', 'D', 'E', 'F'][optionIndex] }}.</h3>
+
+                                            <p>{{ option.text }}</p>
+                                        </span>
+
+                                    </div>
+
+                                    }
+
+                                </div>
+
+                            </article>
+
+                            }
+
+                        </div>
+                    </div>
                 </div>
-                <div class="survey-content">
-                    <nav>
-                        <p> @if (survey?.deadline) {
-                            Ends on {{ survey.deadline | date:'dd.MM.yyyy' }}
-                            } @else {
-                            No deadline
-                            }</p>
-                        <p>Category: {{ survey?.category }}</p>
-                    </nav>
-                    <h2>{{ survey?.title }}</h2>
-                    <p>{{ survey?.description }}</p>
-                    <div class="questions">
+                <div class="btn-div">
+                    @if (voteErrorMessage) {
 
-                        <article class="question">
-                            <header class="question-nav">
-                                <div>
-                                    <h3>1. </h3> &nbsp;
-                                    <h3>
-                                        Which date would work best for you?
-                                    </h3>
-                                </div>
-                                <p>More than one answers are possible</p>
-                            </header>
-                            <div class="answers">
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
+                    <p class="vote-error">{{ voteErrorMessage }}</p>
 
-                            </div>
-                        </article>
-                        <article class="question">
-                            <header class="question-nav">
-                                <div>
-                                    <h3>2. </h3> &nbsp;
-                                    <h3>
-                                        Which date would work best for you?
-                                    </h3>
-                                </div>
-                                <p>More than one answers are possible</p>
-                            </header>
-                            <div class="answers">
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </article>
-                        <article class="question">
-                            <header class="question-nav">
-                                <div>
-                                    <h3>3. </h3> &nbsp;
-                                    <h3>
-                                        Which date would work best for you?
-                                    </h3>
-                                </div>
-                                <p class="d-none">More than one answers are possible</p>
-                            </header>
-                            <div class="answers">
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </article>
-                        <article class="question">
-                            <header class="question-nav">
-                                <div>
-                                    <h3>4. </h3> &nbsp;
-                                    <h3>
-                                        Which date would work best for you?
-                                    </h3>
-                                </div>
-                                <p class="d-none">More than one answers are possible</p>
-                            </header>
-                            <div class="answers">
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                                <div class="answer">
-                                    <div></div>
-                                    <span>
-                                        <h3>A.</h3>
-                                        <p>19.09.2025, Friday</p>
-                                    </span>
-                                </div>
-                            </div>
-                        </article>
-
-                    </div>
-                    <div class="btn-div">
-                        <button class="btn-prm">
-                            Complete survey
-                        </button>
-                    </div>
+                    }
+                    <button class="btn-prm" (click)="completeSurvey()">
+                        Complete survey
+                    </button>
                 </div>
             </div>
         </section>
         <section class="results">
             <header>
                 <h3>Survey results <span>Live</span></h3>
-                <p> Results will be shown here after <br> participants complete the survey.</p>
+                @if (!hasVotes()) {
+
+                <p>
+
+                    Results will be shown here after <br>
+
+                    participants complete the survey.
+
+                </p>
+
+                }
             </header>
-            <div>
-                <p>There are no answears yet.</p>
+            @if (hasVotes()) {
+            <div class="result-list">
+
+
+                @for (question of survey?.survey_questions; track question.id; let questionIndex = $index) {
+
+                <article class="result-question">
+                    <div class="result-question-header">
+
+                        <p>{{ questionIndex + 1 }}.</p>
+
+                        <h4>
+
+                            {{ question.question }}
+
+                        </h4>
+                    </div>
+
+                    @for (option of question.survey_options; track option.id; let optionIndex = $index) {
+
+                    <div class="result-row">
+
+                        <span>{{ ['A', 'B', 'C', 'D', 'E', 'F'][optionIndex] }}</span>
+
+                        <div class="bar-bg">
+
+                            <div class="bar-fill" [style.width.%]="getVotePercentage(question, option)">
+
+                            </div>
+
+                        </div>
+
+                        <p>{{ getVotePercentage(question, option) }}%</p>
+
+
+                    </div>
+
+                    }
+
+                </article>
+
+                }
+
             </div>
+            } @else {
+
+            <div class="no-results-div">
+
+                <p>There are no answers yet.</p>
+
+            </div>
+
+            }
+
         </section>
     </div>
 </section>

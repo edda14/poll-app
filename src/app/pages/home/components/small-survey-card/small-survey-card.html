@@ -1,4 +1,6 @@
-<section [routerLink]="['/survey', survey.id]">
+<section [routerLink]="!isPastSurvey ? ['/survey', survey.id] : null"
+
+  [class.past-survey]="isPastSurvey">
     <div class="firstSection">
 
         <p>{{ survey?.category }}</p>

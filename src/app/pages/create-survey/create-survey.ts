@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-create-survey',
   imports: [FormsModule, RouterLink
@@ -59,8 +60,7 @@ export class CreateSurvey {
       this.description,
       this.deadline,
       this.selectedCategory,
-      this.questions[0].question,
-      this.questions[0].answers
+      this.questions
     );
 
     this.resetForm();
@@ -91,6 +91,14 @@ export class CreateSurvey {
     }
   }
 
+  toggleCategoryDropdown() {
+
+    this.isCategoryOpen = !this.isCategoryOpen;
+
+    this.cdr.detectChanges();
+
+  }
+
   deleteAnswer(question: any, answerIndex: number) {
     question.answers.splice(answerIndex, 1);
   }
@@ -105,11 +113,10 @@ export class CreateSurvey {
       return false;
     }
     if (!this.selectedCategory) {
-
       this.errorMessage = 'Please choose a category.';
-
+      this.isCategoryOpen = true;
+      this.cdr.detectChanges();
       return false;
-
     }
 
     const hasEmptyQuestion = this.questions.some(

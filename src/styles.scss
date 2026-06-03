@@ -1,3 +1,11 @@
 * {
     margin: 0;
 }
+
+@media (hover: none) {
+  * {
+    transition: none !important;
+    transform: none !important;
+  }
+
+}

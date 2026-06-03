@@ -1,8 +1,12 @@
 section {
-    width: 1220px;
+    max-width: 1220px;
     height: auto;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
 
     .left {
         width: 712px;
@@ -23,6 +27,7 @@ section {
             font-size: 24px;
             font-style: "Semibold";
             font-family: "Mulish";
+            text-align: start;
         }
 
         >button {
@@ -55,6 +60,7 @@ section {
                 width: 160px;
                 cursor: pointer;
                 background-color: rgba(255, 183, 112, 1);
+
                 img {
                     opacity: 1;
                 }
@@ -70,63 +76,200 @@ section {
 
     }
 
-    .right {
-        position: relative;
 
-        &:hover {
+}
 
-            .star {
-                transform: translateX(-20px) translateY(20px);
-            }
+.right,
+.media {
+    position: relative;
+    width: 520px;
+    height: 520px;
 
-            .bubble {
-                transform: translateX(-15px) translateY(-10px) scale(1.4);
-            }
-
-            .check {
-                transform: translateX(60px) translateY(20px) scale(1.1);
-            }
-
-            .question {
-                transform: translateX(-20px) translateY(20px) rotate(-40deg);
-            }
-        }
-
-        .clipboard {
-            position: relative;
-            z-index: 2;
-        }
+    &:hover {
 
         .star {
-            position: absolute;
-            bottom: 20px;
-            left: 40px;
-            transition: transform 0.2s ease;
+            transform: translateX(-20px) translateY(20px);
         }
 
         .bubble {
-            position: absolute;
-            z-index: 3;
-            left: 110px;
-            top: 130px;
-            transition: transform 0.2s ease;
-            width: 110px;
+            transform: translateX(-15px) translateY(-10px) scale(1.4);
         }
 
         .check {
-            position: absolute;
-            z-index: 1;
-            top: 370px;
-            right: 80px;
-            transition: transform 0.2s ease;
+            transform: translateX(60px) translateY(20px) scale(1.1);
         }
 
         .question {
-            position: absolute;
-            right: 40px;
-            z-index: 2;
-            rotate: calc(20deg);
-            transition: transform 0.2s ease;
+            transform: translateX(-20px) translateY(20px) rotate(-40deg);
         }
     }
+
+    .clipboard {
+        position: relative;
+        z-index: 2;
+    }
+
+    .star {
+        position: absolute;
+        bottom: 20px;
+        left: 40px;
+        transition: transform 0.2s ease;
+    }
+
+    .bubble {
+        position: absolute;
+        z-index: 3;
+        left: 110px;
+        top: 130px;
+        transition: transform 0.2s ease;
+        width: 110px;
+    }
+
+    .check {
+        position: absolute;
+        z-index: 1;
+        top: 370px;
+        right: 80px;
+        transition: transform 0.2s ease;
+    }
+
+    .question {
+        position: absolute;
+        right: 40px;
+        z-index: 2;
+        rotate: calc(20deg);
+        transition: transform 0.2s ease;
+    }
+}
+
+.media {
+    display: none;
+
+    .star {
+        bottom: 20px;
+        left: 40px;
+    }
+
+    .question {
+        top: 20px;
+        right: 50px;
+    }
+
+    .bubble {
+        top: 130px;
+        left: 100px;
+    }
+
+    .check {
+        top: 390px;
+        right: 60px;
+    }
+}
+
+
+
+@media (max-width: 1250px) {
+    section {
+        max-width: 1000px;
+        flex-direction: column;
+        width: fit-content;
+        padding: 0px;
+
+        .right {
+            display: none;
+        }
+
+        .media {
+            display: block;
+            position: relative;
+            width: 520px;
+            height: 520px;
+        }
+
+        .left {
+            align-items: center;
+
+            >h2 {
+                width: max-content;
+            }
+        }
+    }
+
+}
+
+@media (max-width: 750px) {
+    section {
+        width: stretch;
+        padding: 0px;
+
+        .media {
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .clipboard {
+                width: 250px;
+            }
+
+            .question {
+                width: 50px;
+
+            }
+
+            .bubble {
+                width: 80px;
+                left: 50px;
+                top: 70px;
+
+            }
+
+            .check {
+                width: 50px;
+                top: 200px;
+                right: 40px;
+
+            }
+
+            .star {
+                width: 50px;
+                bottom: 30px;
+
+            }
+
+            &:hover {
+
+                .star {
+                    transform: translateX(-10px) translateY(10px);
+                }
+
+                .bubble {
+                    transform: translateX(-10px) translateY(-10px) scale(1.2);
+                }
+
+                .check {
+                    transform: translateX(15px) translateY(20px) scale(1.1);
+                }
+
+                .question {
+                    transform: translateX(-10px) translateY(10px) rotate(-20deg);
+                }
+            }
+        }
+
+        .left {
+            width: stretch;
+            padding: 0 10px;
+            max-width: 500px;
+
+            >h2 {
+                font-size: 62px;
+                text-align: start;
+                text-wrap: wrap;
+                width: 100%;
+            }
+        }
+    }
+
 }

@@ -3,17 +3,20 @@ section {
     flex-direction: column;
     gap: 56px;
     align-items: center;
+
     >h2 {
         font-family: "Nerko";
         font-size: 72px;
         font-weight: 400;
         color: rgba(255, 183, 112, 1);
     }
+
     >div {
         display: flex;
         flex-direction: column;
         gap: 32px;
-        width: 1042px;
+        max-width: 1042px;
+
         >h3 {
             font-family: "Mulish";
             color: rgba(255, 255, 255, 1);
@@ -22,14 +25,64 @@ section {
             letter-spacing: 5%;
             padding-left: 18px;
         }
+
         >div {
             width: auto;
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: start;
             gap: 32px;
+            max-width: 1042px;
+            overflow-x: auto;
+
+            &::-webkit-scrollbar {
+                width: 3px;
+                height: 3px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(255, 183, 112, 1);
+                border-radius: 999px;
+            }
+
+            >p {
+                font-family: "Mulish";
+                font-size: 24px;
+                color: rgba(255, 183, 112, 1);
+            }
 
 
+        }
+    }
+}
+
+@media (max-width: 1250px) {
+    section {
+        >div {
+            max-width: 650px;
+            >div {
+                max-width: 650px;
+            }
+        }
+    }
+}
+
+@media (max-width: 750px) {
+      section {
+        gap: 42px;
+        padding: 0 10px;
+        >h2 {
+            font-size: 54px;
+        }
+        >div {
+            max-width: 300px;
+            >h3 {
+                font-size: 24px;
+            }
+            >div {
+                max-width: 300px;
+                gap: 16px;
+            }
         }
     }
 }
