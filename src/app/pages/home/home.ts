@@ -7,7 +7,6 @@ import { Footer } from './components/footer/footer';
 import { AllSurveys } from './components/all-surveys/all-surveys'
 import { AfterViewInit } from '@angular/core';
 
-
 @Component({
   selector: 'app-home',
   imports: [Navbar, Hero, SurveySection, Footer, AllSurveys],
@@ -24,30 +23,28 @@ export class Home implements OnInit {
   pastSurveys: any[] = [];
   selectedTab: 'active' | 'past' = 'active';
 
+  /**
+ * Loads all surveys and initializes the survey lists.
+ */
   async ngOnInit() {
-
     this.surveys = await this.surveyService.getSurveys();
-
     this.endingSoonSurveys = this.getEndingSoonSurveys();
-
     this.activeSurveys = this.getActiveSurveys();
-
     this.pastSurveys = this.getPastSurveys();
-
     this.cdr.detectChanges();
-
   }
 
+
+  /**
+ * Returns surveys that end within the next seven days.
+ */
   getEndingSoonSurveys() {
     const now = new Date().getTime();
     const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
     return this.surveys
       .filter(survey => {
         if (!survey.deadline) return false;
-
         const deadline = new Date(survey.deadline).getTime();
-
         return deadline > now && deadline - now <= sevenDays;
       })
       .sort((a, b) =>
@@ -55,22 +52,24 @@ export class Home implements OnInit {
       );
   }
 
+  /**
+ * Returns all currently active surveys.
+ */
   getActiveSurveys() {
     const now = new Date().getTime();
-
     return this.surveys.filter((survey) => {
       if (!survey.deadline) return true;
-
       return new Date(survey.deadline).getTime() > now;
     });
   }
 
+  /**
+ * Returns all completed surveys.
+ */
   getPastSurveys() {
     const now = new Date().getTime();
-
     return this.surveys.filter((survey) => {
       if (!survey.deadline) return false;
-
       return new Date(survey.deadline).getTime() <= now;
     });
   }

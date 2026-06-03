@@ -5,7 +5,6 @@ import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-survey-detail',
   imports: [DatePipe, RouterLink],
@@ -25,6 +24,9 @@ export class SurveyDetail implements OnInit {
   voteErrorMessage = '';
   surveyId = '';
 
+  /**
+ * Loads the selected survey when the route id changes.
+ */
   ngOnInit() {
     this.route.paramMap.subscribe(async (params) => {
       const id = params.get('id');
@@ -33,44 +35,64 @@ export class SurveyDetail implements OnInit {
       this.survey = await this.surveyService.getSurveyById(id);
       this.selectedAnswers = {};
       this.cdr.detectChanges();
-      console.log('Loaded survey:', this.survey);
     });
   }
 
+  /**
+ * Finds an answer option by its id.
+ */
   findOptionById(optionId: string) {
     return this.survey?.survey_questions
       .flatMap((question: any) => question.survey_options)
       .find((option: any) => option.id === optionId);
   }
 
+  /**
+ * Completes the survey after validating all answers.
+ */
   async completeSurvey() {
-    console.log(this.selectedAnswers);
     if (!this.isVoteValid()) {
       this.cdr.detectChanges();
       return;
     }
+    await this.saveVotes();
+    this.reloadSurvey();
+  }
+
+  /**
+ * Saves all selected votes in Supabase.
+ */
+  private async saveVotes() {
     for (const questionId in this.selectedAnswers) {
       for (const optionId of this.selectedAnswers[questionId]) {
         const option = this.findOptionById(optionId);
-        if (option) {
-          const success = await this.surveyService.vote(
-            option.id,
-            option.votes
-          );
-          if (!success) {
-            console.error('Voting failed');
-          }
+        if (!option) continue;
+        const success = await this.surveyService.vote(
+          option.id,
+          option.votes
+        );
+        if (!success) {
+          console.error('Voting failed');
         }
       }
-      console.log('Vote submitted');
     }
-    this.survey = await this.surveyService.getSurveyById(this.survey.id);
+  }
+
+  /**
+ * Reloads the survey data and clears selected answers.
+ */
+  private async reloadSurvey() {
+    this.survey = await this.surveyService.getSurveyById(
+      this.survey.id
+    );
     this.selectedAnswers = {};
     this.cdr.detectChanges();
   }
 
+  /**
+ * Checks if every question has at least one selected answer.
+ */
   isVoteValid(): boolean {
-
     const unansweredQuestion = this.survey.survey_questions.some(
       (question: any) => !this.selectedAnswers[question.id]?.length
     );
@@ -82,6 +104,9 @@ export class SurveyDetail implements OnInit {
     return true;
   }
 
+  /**
+ * Selects or deselects an answer option.
+ */
   selectAnswer(question: any, optionId: string) {
     if (!this.selectedAnswers[question.id]) {
       this.selectedAnswers[question.id] = [];
@@ -97,35 +122,44 @@ export class SurveyDetail implements OnInit {
       this.selectedAnswers[question.id] = [optionId];
     }
     this.cdr.detectChanges();
-
   }
 
+  /**
+ * Calculates the total number of votes for one question.
+ */
   getTotalVotes(question: any): number {
-  return question.survey_options.reduce(
-    (sum: number, option: any) => sum + option.votes,
-    0
-  );
-}
-
-getVotePercentage(question: any, option: any): number {
-  const totalVotes = this.getTotalVotes(question);
-
-  if (totalVotes === 0) {
-    return 0;
+    return question.survey_options.reduce(
+      (sum: number, option: any) => sum + option.votes,
+      0
+    );
   }
 
-  return Math.round((option.votes / totalVotes) * 100);
-}
+  /**
+ * Calculates the vote percentage for one option.
+ */
+  getVotePercentage(question: any, option: any): number {
+    const totalVotes = this.getTotalVotes(question);
+    if (totalVotes === 0) {
+      return 0;
+    }
+    return Math.round((option.votes / totalVotes) * 100);
+  }
 
-hasVotes(): boolean {
-  return this.survey?.survey_questions?.some(
-    (question: any) =>
-      question.survey_options.some(
-        (option: any) => option.votes > 0
-      )
-  );
-}
+  /**
+ * Checks if the survey already has votes.
+ */
+  hasVotes(): boolean {
+    return this.survey?.survey_questions?.some(
+      (question: any) =>
+        question.survey_options.some(
+          (option: any) => option.votes > 0
+        )
+    );
+  }
 
+  /**
+ * Navigates back to the home page.
+ */
   goHome() {
     this.router.navigate(['/'], {
       state: { scrollToAllSurveys: true }

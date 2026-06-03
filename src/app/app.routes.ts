@@ -17,7 +17,6 @@ export const routes: Routes = [
     path: 'create',
     component: CreateSurvey,
   },
-
   {
     path: 'survey/:id',
     component: SurveyDetail,

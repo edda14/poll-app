@@ -13,7 +13,7 @@ export class AllSurveys {
   @Input() selectedTab: 'active' | 'past' = 'active';
   @Input() activeSurveys: any[] = [];
   @Input() pastSurveys: any[] = [];
-    categories = [
+  categories = [
     'Team Activities',
     'Health & Wellness',
     'Gaming & Entertainment',
@@ -24,24 +24,37 @@ export class AllSurveys {
   selectedCategory = '';
   isCategoryOpen = false;
 
- selectTab(tab: 'active' | 'past') {
-  this.selectedTab = tab;
-  this.selectedCategory = '';
-  this.isCategoryOpen = false;
-  this.cdr.detectChanges();
-}
+/**
+ * Switches between active and past surveys.
+ * Resets the selected category filter.
+ */
+  selectTab(tab: 'active' | 'past') {
+    this.selectedTab = tab;
+    this.selectedCategory = '';
+    this.isCategoryOpen = false;
+    this.cdr.detectChanges();
+  }
 
+/**
+ * Opens or closes the category dropdown.
+ */
   toggleCategoryDropdown() {
     this.isCategoryOpen = !this.isCategoryOpen;
     this.cdr.detectChanges();
   }
 
+  /**
+ * Selects a category and closes the dropdown.
+ */
   selectCategory(category: string) {
     this.selectedCategory = category;
     this.isCategoryOpen = false;
     this.cdr.detectChanges();
   }
 
+  /**
+ * Returns surveys filtered by the selected tab and category.
+ */
   getFilteredSurveys() {
     const surveys =
       this.selectedTab === 'active'
@@ -50,7 +63,6 @@ export class AllSurveys {
     if (!this.selectedCategory) {
       return surveys;
     }
-
     return surveys.filter(
       survey => survey.category === this.selectedCategory
     );
