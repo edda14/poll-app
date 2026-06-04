@@ -33,6 +33,7 @@ export class SurveyDetail implements OnInit {
       if (!id) return;
       this.survey = null;
       this.survey = await this.surveyService.getSurveyById(id);
+      this.sortSurveyData();
       this.selectedAnswers = {};
       this.cdr.detectChanges();
     });
@@ -48,6 +49,17 @@ export class SurveyDetail implements OnInit {
   }
 
   /**
+ * Sorts all answer options to keep their order consistent after reloading survey data.
+ */
+  private sortSurveyData() {
+    this.survey.survey_questions.forEach((question: any) => {
+      question.survey_options.sort(
+        (a: any, b: any) => a.text.localeCompare(b.text)
+      );
+    });
+  }
+
+  /**
  * Completes the survey after validating all answers.
  */
   async completeSurvey() {
@@ -56,7 +68,16 @@ export class SurveyDetail implements OnInit {
       return;
     }
     await this.saveVotes();
-    this.reloadSurvey();
+    await this.reloadSurvey();
+  }
+
+  /**
+ * Returns the vote count of an option including the current preview selection.
+ */
+  getOptionVotes(question: any, option: any): number {
+    const savedVotes = option.votes || 0;
+    const isSelected = this.selectedAnswers[question.id]?.includes(option.id);
+    return isSelected ? savedVotes + 1 : savedVotes;
   }
 
   /**
@@ -85,6 +106,7 @@ export class SurveyDetail implements OnInit {
     this.survey = await this.surveyService.getSurveyById(
       this.survey.id
     );
+    this.sortSurveyData();
     this.selectedAnswers = {};
     this.cdr.detectChanges();
   }
@@ -129,32 +151,41 @@ export class SurveyDetail implements OnInit {
  */
   getTotalVotes(question: any): number {
     return question.survey_options.reduce(
-      (sum: number, option: any) => sum + option.votes,
+      (sum: number, option: any) =>
+        sum + this.getOptionVotes(question, option),
       0
     );
   }
 
   /**
- * Calculates the vote percentage for one option.
- */
+   * Calculates the vote percentage for one option.
+   */
   getVotePercentage(question: any, option: any): number {
     const totalVotes = this.getTotalVotes(question);
     if (totalVotes === 0) {
       return 0;
     }
-    return Math.round((option.votes / totalVotes) * 100);
+    let votes = option.votes;
+    if (this.selectedAnswers[question.id]?.includes(option.id)) {
+      votes++;
+    }
+    return Math.round((votes / totalVotes) * 100);
   }
 
   /**
  * Checks if the survey already has votes.
  */
   hasVotes(): boolean {
-    return this.survey?.survey_questions?.some(
+    const hasSavedVotes = this.survey?.survey_questions?.some(
       (question: any) =>
         question.survey_options.some(
           (option: any) => option.votes > 0
         )
     );
+    const hasPreviewVotes = Object.values(this.selectedAnswers).some(
+      (answers) => answers.length > 0
+    );
+    return hasSavedVotes || hasPreviewVotes;
   }
 
   /**

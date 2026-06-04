@@ -23,7 +23,7 @@
                 @if (isCategoryOpen) {
                 <ul class="dropdown-menu">
                     @for (category of categories; track category) {
-                    <li (click)="selectedCategory = category; isCategoryOpen = false">
+                    <li (click)="selectCategory(category)">
                         {{ category }}
                     </li>
                     }

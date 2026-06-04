@@ -133,6 +133,16 @@ export class CreateSurvey {
     this.cdr.detectChanges();
   }
 
+  /**
+ * Selects a category and closes the dropdown.
+ */
+selectCategory(category: string) {
+  this.selectedCategory = category;
+  this.isCategoryOpen = false;
+  this.errorMessage = '';
+  this.cdr.detectChanges();
+}
+
 
   /**
  * Deletes an answer field from a question.
