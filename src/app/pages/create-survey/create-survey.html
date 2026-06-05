@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="input-group">
                                 <label>Survey name</label>
-                                <input class="title" type="text" [(ngModel)]="surveyTitle" name="surveyTitle">
+                                <input class="title" type="text" [(ngModel)]="surveyTitle" name="surveyTitle" maxlength="100">
                             </div>
                         </div>
 
@@ -58,7 +58,7 @@
                         <div class="top">
                             <div class="input-group">
                                 <label>Describing text (optional)</label>
-                                <textarea [(ngModel)]="description" name="description"></textarea>
+                                <textarea [(ngModel)]="description" name="description" maxlength="500"></textarea>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                                         (click)="questions.length > 1 && deleteQuestion($index)">
                                 </div>
                             </div>
-                            <input class="question-input" type="text" [(ngModel)]="question.question"
+                            <input class="question-input" type="text" maxlength="100" [(ngModel)]="question.question"
                                 [name]="'question' + questionIndex">
                             <div class="answers-header">
                                 <h5>Answers</h5>
@@ -94,7 +94,7 @@
                                         <h3>{{ ['A', 'B', 'C', 'D', 'E', 'F'][$index] }}.</h3>
                                     </span>
                                     <input type="text" [(ngModel)]="question.answers[answerIndex]"
-                                        [name]="'answer' + questionIndex + '-' + answerIndex">
+                                        [name]="'answer' + questionIndex + '-' + answerIndex" maxlength="100">
                                     <div class="delete" [class.disabled]="question.answers.length <= 2"
                                         (click)="question.answers.length > 2 && deleteAnswer(question, $index)">
                                         <img src="./assets/icons/trash.svg" alt="trash">
