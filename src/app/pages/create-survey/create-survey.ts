@@ -58,7 +58,6 @@ export class CreateSurvey {
   }
 
   /**
-  
   * Redirects to the created survey detail page.
       */
   private redirectToSurvey(surveyId: string | null) {

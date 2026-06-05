@@ -25,15 +25,17 @@ export class Home implements OnInit {
   selectedTab: 'active' | 'past' = 'active';
   isCreateSurveyOpen = false;
 
-  */**
-  Opens Create Survey */
-    openCreateSurvey() {
+  /**
+   * Opens create Survey 
+   */
+  openCreateSurvey() {
     this.isCreateSurveyOpen = true;
   }
 
-  */**
-  Close Create Survey */
-    closeCreateSurvey() {
+  /**
+   *Close create Survey 
+   * */
+  closeCreateSurvey() {
     this.isCreateSurveyOpen = false;
   }
 
