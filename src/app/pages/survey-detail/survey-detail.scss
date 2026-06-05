@@ -153,11 +153,11 @@
                 gap: 6px;
 
                 >span {
-                    font-size: 12px;
+                    font-size: 16px;
                 }
 
                 >p {
-                    font-size: 12px;
+                    font-size: 16px;
                     font-weight: 800;
                 }
             }
@@ -262,7 +262,7 @@
 
                             >p {
                                 font-family: "Mulish";
-                                font-size: 14px;
+                                font-size: 16px;
                                 font-weight: 500;
                                 color: rgba(53, 39, 58, 1);
                             }
@@ -315,7 +315,7 @@
 
                                 >p {
                                     margin-left: 18px;
-                                    font-size: 12px;
+                                    font-size: 16px;
                                     font-weight: 400;
                                 }
                             }
@@ -434,6 +434,8 @@
 }
 
 @media (max-width: 650px) {
+    
+
     .content {
         min-width: 300px;
         justify-content: center;
@@ -454,6 +456,7 @@
 
     .results {
         width: 300px !important;
+        min-height: 200px !important;
     }
 
     .result-list {
@@ -463,6 +466,18 @@
     .survey-content {
         >h2 {
             font-size: 42px !important;
+            line-height: 42px !important;
+        }
+        >nav {
+            flex-direction: column !important;
+            gap: 8px;
+            margin-top: 8px;
         }
     }
+
+     .no-results-div {
+                >p {
+                    margin-top: 56px !important;
+                }
+            }
 }

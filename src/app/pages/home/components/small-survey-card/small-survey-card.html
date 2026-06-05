@@ -1,32 +1,24 @@
-<section [routerLink]="!isPastSurvey ? ['/survey', survey.id] : null"
-
-  [class.past-survey]="isPastSurvey">
+<section [routerLink]="!isPastSurvey ? ['/survey', survey.id] : null" [class.past-survey]="isPastSurvey">
     <div class="firstSection">
-
         <p>{{ survey?.category }}</p>
-
         <h3>{{ survey?.title }}</h3>
-
     </div>
-
     <div class="secondSection">
-
         <div>
-
             <p>
-
                 @if (survey?.deadline) {
-                    Ends on
-                    <span>
-                        {{ survey.deadline | date:'dd.MM.yyyy' }}
-                    </span>
+                @if (isPastSurvey) {
+                Ended on
                 } @else {
-                    No deadline
+                Ends on
                 }
-
+                <span>
+                    {{ survey.deadline | date:'dd.MM.yyyy' }}
+                </span>
+                } @else {
+                No deadline
+                }
             </p>
-
         </div>
-
     </div>
 </section>

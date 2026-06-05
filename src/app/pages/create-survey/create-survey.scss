@@ -723,6 +723,10 @@
         >article {
             padding: 12px 6px;
             width: 300px;
+            .footer {
+                    justify-content: center;
+                    flex-direction: column;
+                }
 
             .form {
                 padding: 5px;
@@ -776,6 +780,9 @@
 
                     .answers-header {
                         width: 280px;
+                        flex-direction: column;
+                        align-items: start;
+                        gap: 8px;
                     }
 
                     .question-header {

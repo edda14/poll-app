@@ -31,10 +31,11 @@ export class SurveyService {
     deadline: string,
     category: string,
     questions: any[]
-  ) {
+  ): Promise<string | null> {
     const surveyId = await this.insertSurvey(title, description, deadline, category);
-    if (!surveyId) return;
+    if (!surveyId) return null;
     await this.insertQuestions(surveyId, questions);
+    return surveyId;
   }
 
   /**
@@ -80,9 +81,9 @@ export class SurveyService {
     }
   }
 
-/**
- * Inserts a question and its related answer options.
- */
+  /**
+   * Inserts a question and its related answer options.
+   */
   private async insertQuestionWithOptions(
     surveyId: string,
     question: any
@@ -135,14 +136,10 @@ export class SurveyService {
   /**
  * Builds an array of answer option objects.
  */
-  private buildOptions(
-    surveyId: string,
-    questionId: string,
-    answers: string[]
-  ) {
+  private buildOptions(surveyId: string, questionId: string, answers: string[]) {
     return answers
       .filter((answer) => answer.trim() !== '')
-      .map((answer) => this.buildOption(surveyId, questionId, answer));
+      .map((answer, index) => this.buildOption(surveyId, questionId, answer, index));
   }
 
   /**
@@ -151,13 +148,15 @@ export class SurveyService {
   private buildOption(
     surveyId: string,
     questionId: string,
-    answer: string
+    answer: string,
+    position: number
   ) {
     return {
       survey_id: surveyId,
       question_id: questionId,
       text: answer,
       votes: 0,
+      position,
     };
   }
 

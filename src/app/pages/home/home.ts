@@ -6,10 +6,11 @@ import { SurveySection } from './components/survey-section/survey-section';
 import { Footer } from './components/footer/footer';
 import { AllSurveys } from './components/all-surveys/all-surveys'
 import { AfterViewInit } from '@angular/core';
+import { CreateSurvey } from '../create-survey/create-survey';
 
 @Component({
   selector: 'app-home',
-  imports: [Navbar, Hero, SurveySection, Footer, AllSurveys],
+  imports: [Navbar, Hero, SurveySection, Footer, AllSurveys, CreateSurvey],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -22,6 +23,15 @@ export class Home implements OnInit {
   activeSurveys: any[] = [];
   pastSurveys: any[] = [];
   selectedTab: 'active' | 'past' = 'active';
+  isCreateSurveyOpen = false;
+
+  openCreateSurvey() {
+    this.isCreateSurveyOpen = true;
+  }
+
+  closeCreateSurvey() {
+    this.isCreateSurveyOpen = false;
+  }
 
   /**
  * Loads all surveys and initializes the survey lists.

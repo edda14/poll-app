@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SurveyService } from '../../services/survey';
 import { RouterLink } from '@angular/router';
@@ -6,14 +6,15 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-survey',
-  imports: [FormsModule, RouterLink
-  ],
+  imports: [FormsModule, RouterLink],
   templateUrl: './create-survey.html',
   styleUrl: './create-survey.scss',
 })
 
 export class CreateSurvey {
   private surveyService = inject(SurveyService);
+  private router = inject(Router);
+  @Output() closeModal = new EventEmitter<void>();
   surveyTitle = '';
   description = '';
   deadline = '';
@@ -51,8 +52,24 @@ export class CreateSurvey {
       this.stopPublishing();
       return;
     }
-    await this.createSurvey();
+    const surveyId = await this.createSurvey();
     this.showSuccessMessage();
+    this.redirectToSurvey(surveyId);
+  }
+
+  /**
+  
+  * Redirects to the created survey detail page.
+      */
+  private redirectToSurvey(surveyId: string | null) {
+    if (!surveyId) return;
+    setTimeout(() => {
+      this.router.navigateByUrl('/survey/' + surveyId);
+    }, 1000);
+  }
+
+  close() {
+    this.closeModal.emit();
   }
 
   /**
@@ -76,14 +93,13 @@ export class CreateSurvey {
    * Creates the survey in Supabase and resets the form afterwards.
    */
   private async createSurvey() {
-    await this.surveyService.createSurvey(
-      this.surveyTitle,
+    const surveyId = await this.surveyService.createSurvey(this.surveyTitle,
       this.description,
       this.deadline,
       this.selectedCategory,
-      this.questions
-    );
+      this.questions);
     this.resetForm();
+    return surveyId;
   }
 
   /**
@@ -136,12 +152,12 @@ export class CreateSurvey {
   /**
  * Selects a category and closes the dropdown.
  */
-selectCategory(category: string) {
-  this.selectedCategory = category;
-  this.isCategoryOpen = false;
-  this.errorMessage = '';
-  this.cdr.detectChanges();
-}
+  selectCategory(category: string) {
+    this.selectedCategory = category;
+    this.isCategoryOpen = false;
+    this.errorMessage = '';
+    this.cdr.detectChanges();
+  }
 
 
   /**
@@ -165,6 +181,7 @@ selectCategory(category: string) {
  */
   isFormValid(): boolean {
     if (!this.hasValidTitle()) return false;
+    if (!this.hasValidDeadline()) return false;
     if (!this.hasValidCategory()) return false;
     if (!this.hasValidQuestions()) return false;
     if (!this.hasValidAnswers()) return false;
@@ -179,6 +196,33 @@ selectCategory(category: string) {
     if (this.surveyTitle.trim()) return true;
     this.errorMessage = 'Please enter a survey name.';
     return false;
+  }
+
+  /**
+ * Checks if the optional deadline is valid and in the future.
+ */
+  private hasValidDeadline(): boolean {
+    if (!this.deadline.trim()) return true;
+    const deadlineDate = this.parseGermanDate(this.deadline);
+    if (!deadlineDate) {
+      this.errorMessage = 'Please enter a valid date.';
+      return false;
+    }
+    if (deadlineDate.getTime() <= new Date().getTime()) {
+      this.errorMessage = 'Please choose a future date.';
+      return false;
+    }
+    return true;
+  }
+
+  /**
+ * Converts a German date string into a Date object.
+ */
+  private parseGermanDate(date: string): Date | null {
+    const [day, month, year] = date.split('.').map(Number);
+    const parsedDate = new Date(year, month - 1, day);
+    const isValidDate = parsedDate.getFullYear() === year && parsedDate.getMonth() === month - 1 && parsedDate.getDate() === day;
+    return isValidDate ? parsedDate : null;
   }
 
   /**

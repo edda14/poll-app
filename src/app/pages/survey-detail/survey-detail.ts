@@ -23,6 +23,7 @@ export class SurveyDetail implements OnInit {
   survey: any = null;
   voteErrorMessage = '';
   surveyId = '';
+  hasCompletedSurvey = false;
 
   /**
  * Loads the selected survey when the route id changes.
@@ -34,10 +35,21 @@ export class SurveyDetail implements OnInit {
       this.survey = null;
       this.survey = await this.surveyService.getSurveyById(id);
       this.sortSurveyData();
-      this.selectedAnswers = {};
+      this.loadSavedVote(id);
       this.cdr.detectChanges();
     });
   }
+
+  /**
+
+* Loads the saved vote state from local storage.
+    */
+ private loadSavedVote(id: string) {
+const savedAnswers = localStorage.getItem('survey-' + id);
+const completed = localStorage.getItem('completed-' + id);
+this.selectedAnswers = savedAnswers ? JSON.parse(savedAnswers) : {};
+this.hasCompletedSurvey = completed === 'true';
+}
 
   /**
  * Finds an answer option by its id.
@@ -49,17 +61,6 @@ export class SurveyDetail implements OnInit {
   }
 
   /**
- * Sorts all answer options to keep their order consistent after reloading survey data.
- */
-  private sortSurveyData() {
-    this.survey.survey_questions.forEach((question: any) => {
-      question.survey_options.sort(
-        (a: any, b: any) => a.text.localeCompare(b.text)
-      );
-    });
-  }
-
-  /**
  * Completes the survey after validating all answers.
  */
   async completeSurvey() {
@@ -68,9 +69,25 @@ export class SurveyDetail implements OnInit {
       return;
     }
     await this.saveVotes();
-    await this.reloadSurvey();
+    this.completeAndRedirect();
   }
 
+  /**
+   * Stores the completed survey locally and redirects to the home page.
+   */
+  private completeAndRedirect() {
+    localStorage.setItem(
+      `survey-${this.survey.id}`,
+      JSON.stringify(this.selectedAnswers)
+    );
+    localStorage.setItem(
+      `completed-${this.survey.id}`,
+      'true'
+    );
+    this.router.navigate(['/'], {
+      state: { scrollToAllSurveys: true }
+    });
+  }
   /**
  * Returns the vote count of an option including the current preview selection.
  */
@@ -100,16 +117,15 @@ export class SurveyDetail implements OnInit {
   }
 
   /**
- * Reloads the survey data and clears selected answers.
+ * Sorts all answer options by their original position.
  */
-  private async reloadSurvey() {
-    this.survey = await this.surveyService.getSurveyById(
-      this.survey.id
+private sortSurveyData() {
+  this.survey.survey_questions.forEach((question: any) => {
+    question.survey_options.sort(
+      (a: any, b: any) => a.position - b.position
     );
-    this.sortSurveyData();
-    this.selectedAnswers = {};
-    this.cdr.detectChanges();
-  }
+  });
+}
 
   /**
  * Checks if every question has at least one selected answer.
@@ -130,6 +146,7 @@ export class SurveyDetail implements OnInit {
  * Selects or deselects an answer option.
  */
   selectAnswer(question: any, optionId: string) {
+    if (this.hasCompletedSurvey) return;
     if (!this.selectedAnswers[question.id]) {
       this.selectedAnswers[question.id] = [];
     }

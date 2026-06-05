@@ -81,9 +81,15 @@
                     <p class="vote-error">{{ voteErrorMessage }}</p>
 
                     }
+                    @if (!hasCompletedSurvey) {
+
                     <button class="btn-prm" (click)="completeSurvey()">
+
                         Complete survey
+
                     </button>
+
+                    }
                 </div>
             </div>
         </section>

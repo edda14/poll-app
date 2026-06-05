@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -7,4 +7,9 @@ import { RouterLink } from '@angular/router';
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
 })
-export class Hero {}
+export class Hero {
+  @Output() createSurvey = new EventEmitter();
+  openCreateSurvey() {
+this.createSurvey.emit();
+}
+}
