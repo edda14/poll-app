@@ -68,8 +68,12 @@ export class CreateSurvey {
     }, 1000);
   }
 
+  /**
+   * Close the Modal Overlay
+   */
   close() {
     this.closeModal.emit();
+    this.router.navigate(['/']);
   }
 
   /**
