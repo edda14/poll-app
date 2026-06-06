@@ -1,16 +1,15 @@
 <main class="home">
-  <app-navbar/>
+  <app-navbar />
   <app-hero (createSurvey)="openCreateSurvey()" />
   <app-survey-section [surveys]="endingSoonSurveys"></app-survey-section>
   <app-all-surveys [selectedTab]="selectedTab" [activeSurveys]="activeSurveys" [pastSurveys]="pastSurveys">
 
   </app-all-surveys>
   <app-footer />
-  @if (isCreateSurveyOpen) {
-<div class="overlay" (click)="closeCreateSurvey()">
-  <div class="modal" (click)="$event.stopPropagation()">
-    <app-create-survey (closeModal)="closeCreateSurvey()"/>
-  </div>
-</div>
-}
+  <dialog class="create-dialog" #createDialog>
+    <button class="dialog-backdrop" (click)="closeCreateSurvey()"></button>
+    <div class="dialog-content">
+      <app-create-survey (closeModal)="closeCreateSurvey()" />
+    </div>
+  </dialog>
 </main>

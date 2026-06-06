@@ -59,7 +59,7 @@ section {
 @media (max-width: 1250px) {
     section {
         >div {
-            max-width: 650px;
+            max-width: 700px;
             >div {
                 max-width: 650px;
             }
@@ -72,8 +72,23 @@ section {
         gap: 42px;
         padding: 0 10px;
         >h2 {
-            font-size: 54px;
+            font-size: 42px;
         }
+        >div {
+            max-width: 500px;
+            >h3 {
+                font-size: 24px;
+            }
+            >div {
+                max-width: 500px;
+                gap: 16px;
+            }
+        }
+    }
+}
+
+@media(max-width: 550px) {
+      section {
         >div {
             max-width: 300px;
             >h3 {

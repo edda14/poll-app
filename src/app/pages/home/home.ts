@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { SurveyService } from '../../services/survey';
 import { Navbar } from './components/navbar/navbar';
 import { Hero } from './components/hero/hero';
 import { SurveySection } from './components/survey-section/survey-section';
 import { Footer } from './components/footer/footer';
 import { AllSurveys } from './components/all-surveys/all-surveys'
-import { AfterViewInit } from '@angular/core';
 import { CreateSurvey } from '../create-survey/create-survey';
 
 @Component({
@@ -24,19 +23,22 @@ export class Home implements OnInit {
   pastSurveys: any[] = [];
   selectedTab: 'active' | 'past' = 'active';
   isCreateSurveyOpen = false;
+  @ViewChild('createDialog') createDialog!: ElementRef;
 
   /**
    * Opens create Survey 
    */
   openCreateSurvey() {
-    this.isCreateSurveyOpen = true;
+    this.createDialog.nativeElement.showModal();
+    document.body.style.overflow = 'hidden';
   }
 
   /**
    *Close create Survey 
    * */
   closeCreateSurvey() {
-    this.isCreateSurveyOpen = false;
+    this.createDialog.nativeElement.close();
+    document.body.style.overflow = '';
   }
 
   /**

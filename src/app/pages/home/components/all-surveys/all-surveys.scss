@@ -196,6 +196,7 @@ section {
 
     }
      #allSurveys {
+        width: 700px;
         display: grid;
         grid-template-columns:none !important;
         display: flex;
@@ -207,8 +208,18 @@ section {
      }
 }
 
+@media (max-width: 750px) {
+    #allSurveys {
+        width: 500px;
+    }
+}
+
 @media (max-width: 550px) {
     section {
         padding: 0 10px;
+    }
+
+    #allSurveys {
+        width: 300px;
     }
 }
